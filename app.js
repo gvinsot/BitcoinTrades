@@ -93,12 +93,14 @@ var saveStats = function () {
         console.log('Saved stats');
     };
 
-Promise.resolve(loadPreviousStat).catch(logException)    
-    .then(startGetServerTime).catch(logException)
-    .then(endGetServerTime).catch(logException)
-    .then(startGetLastTicker).catch(logException)
-    .then(endGetLastTicker).catch(logException)
+var p1 = Promise.resolve(loadPreviousStat).catch(logException);    
+var p2 = Promise.resolve(startGetServerTime).catch(logException)
+    .then(endGetServerTime).catch(logException);
+var p3 = Promise.resolve(startGetLastTicker).catch(logException)
+    .then(endGetLastTicker).catch(logException);
+
+Promise.all([p1,p2,p3])
     .then(saveTransactionLogs).catch(logException)
     .then(saveStats).catch(logException)
-    .then(function(){console.log("Success");},
-         function(){console.log("Failed");});//process.exit(0);
+    .then(function(){console.log("Success");process.exit(0);},
+         function(){console.log("Failed");;process.exit(0);});//
