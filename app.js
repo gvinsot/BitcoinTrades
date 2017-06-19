@@ -1,6 +1,6 @@
 
 'use strict';
-var rp = require('request-promise');
+var rp = require('request-promise-any');
 var fs = require('mz/fs');
 var moment = require('moment');
 
@@ -10,69 +10,90 @@ var stat =
         "lastRate":0,
         "numberOfTrades":0
     };
+var dateString ="";
+var currentStat=
+    {
+        "volume":0,
+        "rate":0,
+        "numberOfTrades":0
+    };
 
-var loadPreviousStat = 
-    fs.readFile('stats.txt', 'utf8')
-        .then(function (resultString) 
-        {
-            stat = JSON.parse(resultString);
-            console.log('Stats loaded !');
-        })
-        .catch(function(ex)
-        {
-        });
+var logException = function(ex)
+{
+    Console.log("ERROR:"+ex.message);
+}
 
-var saveStats = new function()
+var loadPreviousStat = function()
+{
+    return fs.readFile('stats.txt', 'utf8')
+    .then(function (statString) {
+        stat = JSON.parse(statString);
+        console.log('Stats loaded');
+    });
+}
+
+
+var getServerTime= new function()
+{
+        var options = {
+        'uri': 'https://api.kraken.com/0/public/Time',
+        'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
+        };
+
+        return rp(options).then(function(serverTimeString) {
+                console.log('Retrieved Server Time');
+                var date = moment.unix(JSON.parse(serverTimeString).result.unixtime);            
+                dateString=date.year()+ ";"+(date.month()+1)+";"+date.date()+";"+date.hours()+";"+date.minutes();
+                resolve();
+            }).inspect();
+}
+
+var getLastTicker = new function()
 {
    var options = {
     'uri': 'https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR',
     'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
     };
 
-
-    rp(options)
-    .then(function(resultString)
-    {
+    return rp(options).then(function(resultString) {
+        console.log('Retrieve ticker');
         var resultObject = JSON.parse(resultString);
         var currentRate=resultObject.result.XXBTZEUR.c[0];
 
         var dayTrades=resultObject.result.XXBTZEUR.t[0];
-        var numberOfTrades = dayTrades-stat.numberOfTrades;
-        if(numberOfTrades<0)
-            numberOfTrades = dayTrades;
+        currentStat.numberOfTrades = dayTrades-stat.numberOfTrades;
+        if(currentStat.numberOfTrades<0)
+            currentStat.numberOfTrades = dayTrades;
         
         var dayVolume=resultObject.result.XXBTZEUR.v[0];
-        var volume = dayVolume-stat.dayVolume;
-        if(volume<0)
-            volume = dayVolume;
+        currentStat.volume = dayVolume-stat.dayVolume;
+        if(currentStat.volume<0)
+            currentStat.volume = dayVolume;
         
-        var rate = ( parseFloat(currentRate) + parseFloat(stat.lastRate))/2;  
+        currentStat.rate = ( parseFloat(currentRate) + parseFloat(stat.lastRate))/2;  
 
-        console.log(resultString+"\n");
-        options.uri = 'https://api.kraken.com/0/public/Time';
-        rp(options).then(function(resultString)
-        {
-            var date = moment.unix(JSON.parse(resultString).result.unixtime);
-            console.log(resultString+"\n");
-            var dateString=date.year()+ ";"+(date.month()+1)+";"+date.date()+";"+date.hours()+";"+date.minutes();
-            fs.appendFile('transactionLogs.txt', dateString+";"+rate+";"+volume+";"+numberOfTrades+ "\r\n")
-                .then(function () 
-                {
+        stat.dayVolume=dayVolume;
+        stat.numberOfTrades=dayTrades;
+        stat.lastRate=currentRate;
+        
+        console.log("Rate: "+currentRate+"€");
+    }).inspect();;
+}
 
-                    stat.dayVolume=dayVolume;
-                    stat.numberOfTrades=dayTrades;
-                    stat.lastRate=currentRate;
-                    var toWrite=JSON.stringify(stat);
-                    fs.writeFileSync('stats.txt',toWrite, 'utf8' );
-
-                    console.log('Saved!');
-                    process.exit(0); // 1 for error
-                });
-                
-        });
-    });
+var saveStats=function()
+{
+    return fs.appendFile('transactionLogs.txt', dateString+";"+currentStat.rate+";"+currentStat.volume+";"+currentStat.numberOfTrades+ "\r\n")
+    .then(function () {
+        var toWrite=JSON.stringify(stat);
+        fs.writeFileSync('stats.txt',toWrite, 'utf8' );
+        console.log('Saved stats');
+    });                
 }
 
 
-loadPreviousStat
-    .then(saveStats);
+Promise.resolve(loadPreviousStat).catch(logException)    
+    .then(getServerTime).catch(logException)
+    .then(getLastTicker).catch(logException)
+    .then(saveStats).catch(logException)
+    .then(function(){console.log("Success");},
+         function(){console.log("Failed");});//process.exit(0);
