@@ -35,17 +35,17 @@ var loadPreviousStat = function()
 
 var getServerTime= new function()
 {
-        var options = {
-        'uri': 'https://api.kraken.com/0/public/Time',
-        'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
-        };
+    var options = {
+    'uri': 'https://api.kraken.com/0/public/Time',
+    'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
+    };
 
-        return rp(options).then(function(serverTimeString) {
-                console.log('Retrieved Server Time');
-                var date = moment.unix(JSON.parse(serverTimeString).result.unixtime);            
-                dateString=date.year()+ ";"+(date.month()+1)+";"+date.date()+";"+date.hours()+";"+date.minutes();
-                resolve();
-            }).inspect();
+    return rp(options).then(function(serverTimeString) {
+            console.log('Retrieved Server Time');
+            var date = moment.unix(JSON.parse(serverTimeString).result.unixtime);            
+            dateString=date.year()+ ";"+(date.month()+1)+";"+date.date()+";"+date.hours()+";"+date.minutes();
+            resolve();
+        });
 }
 
 var getLastTicker = new function()
@@ -77,7 +77,7 @@ var getLastTicker = new function()
         stat.lastRate=currentRate;
         
         console.log("Rate: "+currentRate+"€");
-    }).inspect();;
+    });
 }
 
 var saveStats=function()
