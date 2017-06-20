@@ -45,8 +45,11 @@ var startGetServerTime= new function()
 }
 var endGetServerTime =function(serverTimeString) {
     console.log('Retrieved Server Time');
-    var date = moment.unix(JSON.parse(serverTimeString).result.unixtime);            
-    dateString=date.year()+ ";"+(date.month()+1)+";"+date.date()+";"+date.hours()+";"+date.minutes();
+    dateString= JSON.parse(serverTimeString).result.rfc1123;
+    // var date = moment.utc(); 
+    // var month =   (date.month()+1).toString();
+    // month = month.length==1 ? "0" + month : month;         
+    // dateString=date.year()+ "-"+month+"-"+date.date()+"T"+date.hours()+":"+date.minutes()+":"+date.seconds();
 }
 
 var startGetLastTicker = new function()
