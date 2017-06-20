@@ -1,0 +1,120 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'mz/fs' ]
+2 info using npm@2.7.4
+3 info using node@v0.12.2
+4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
+5 warn package.json Trade@1.0.0 No description
+6 warn package.json Trade@1.0.0 No repository field.
+7 warn package.json Trade@1.0.0 No README data
+8 silly cache add args [ 'mz/fs', null ]
+9 verbose cache add spec mz/fs
+10 silly cache add parsed spec { raw: 'mz/fs',
+10 silly cache add   scope: null,
+10 silly cache add   name: null,
+10 silly cache add   rawSpec: 'mz/fs',
+10 silly cache add   spec: 'git+ssh://git@github.com/mz/fs.git',
+10 silly cache add   type: 'hosted',
+10 silly cache add   hosted:
+10 silly cache add    { type: 'github',
+10 silly cache add      ssh: 'git@github.com:mz/fs.git',
+10 silly cache add      sshUrl: 'git+ssh://git@github.com/mz/fs.git',
+10 silly cache add      httpsUrl: 'https://github.com/mz/fs.git',
+10 silly cache add      directUrl: 'https://raw.githubusercontent.com/mz/fs/master/package.json' } }
+11 info maybeGithub Attempting mz/fs from git://github.com/mz/fs.git
+12 verbose addRemoteGit git-github-com-mz-fs-git-e60a1000 not in flight; caching
+13 info git [ 'config', '--get', 'remote.origin.url' ]
+14 error git -c core.longpaths=true config --get remote.origin.url
+15 verbose addRemoteGit remote.origin.url:
+16 warn addRemoteGit Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
+16 warn addRemoteGit
+16 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:751:12)
+16 warn addRemoteGit     at ChildProcess.emit (events.js:110:17)
+16 warn addRemoteGit     at maybeClose (child_process.js:1015:16)
+16 warn addRemoteGit     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
+16 warn addRemoteGit  resetting remote C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000 because of error: { [Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
+16 warn addRemoteGit ]
+16 warn addRemoteGit   killed: false,
+16 warn addRemoteGit   code: 1,
+16 warn addRemoteGit   signal: null,
+16 warn addRemoteGit   cmd: 'git -c core.longpaths=true config --get remote.origin.url' }
+17 info addRemoteGit resetting C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000
+18 silly gentlyRm C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000 is being purged
+19 verbose gentlyRm don't care about contents; nuking C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000
+20 silly vacuum-fs purging C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000
+21 silly vacuum-fs quitting because other entries in C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes
+22 info git [ 'clone',
+22 info git   '--template=C:\\Users\\givinsot\\AppData\\Roaming\\npm-cache\\_git-remotes\\_templates',
+22 info git   '--mirror',
+22 info git   'git://github.com/mz/fs.git',
+22 info git   'C:\\Users\\givinsot\\AppData\\Roaming\\npm-cache\\_git-remotes\\git-github-com-mz-fs-git-e60a1000' ]
+23 error git -c core.longpaths=true clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git://github.com/mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000
+24 verbose git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git://github.com/mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000: Cloning into bare repository 'C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000'...
+24 verbose git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git://github.com/mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000: fatal: remote error:
+24 verbose git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git://github.com/mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-e60a1000:   Repository not found.
+25 info maybeGithub Couldn't clone git://github.com/mz/fs.git
+26 info maybeGithub Now attempting mz/fs from git@github.com:mz/fs.git
+27 verbose addRemoteGit git-github-com-mz-fs-git-867ae47f not in flight; caching
+28 info git [ 'config', '--get', 'remote.origin.url' ]
+29 error git -c core.longpaths=true config --get remote.origin.url
+30 verbose addRemoteGit remote.origin.url:
+31 warn addRemoteGit Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
+31 warn addRemoteGit
+31 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:751:12)
+31 warn addRemoteGit     at ChildProcess.emit (events.js:110:17)
+31 warn addRemoteGit     at maybeClose (child_process.js:1015:16)
+31 warn addRemoteGit     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
+31 warn addRemoteGit  resetting remote C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f because of error: { [Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
+31 warn addRemoteGit ]
+31 warn addRemoteGit   killed: false,
+31 warn addRemoteGit   code: 1,
+31 warn addRemoteGit   signal: null,
+31 warn addRemoteGit   cmd: 'git -c core.longpaths=true config --get remote.origin.url' }
+32 info addRemoteGit resetting C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f
+33 silly gentlyRm C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f is being purged
+34 verbose gentlyRm don't care about contents; nuking C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f
+35 silly vacuum-fs purging C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f
+36 silly vacuum-fs quitting because other entries in C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes
+37 info git [ 'clone',
+37 info git   '--template=C:\\Users\\givinsot\\AppData\\Roaming\\npm-cache\\_git-remotes\\_templates',
+37 info git   '--mirror',
+37 info git   'git@github.com:mz/fs.git',
+37 info git   'C:\\Users\\givinsot\\AppData\\Roaming\\npm-cache\\_git-remotes\\git-github-com-mz-fs-git-867ae47f' ]
+38 error git -c core.longpaths=true clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f
+39 error git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f: Cloning into bare repository 'C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f'...
+39 error git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f: Host key verification failed.
+39 error git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f: fatal: Could not read from remote repository.
+39 error git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f:
+39 error git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f: Please make sure you have the correct access rights
+39 error git clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f: and the repository exists.
+40 verbose stack Error: Command failed: git -c core.longpaths=true clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f
+40 verbose stack Cloning into bare repository 'C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f'...
+40 verbose stack Host key verification failed.
+40 verbose stack fatal: Could not read from remote repository.
+40 verbose stack
+40 verbose stack Please make sure you have the correct access rights
+40 verbose stack and the repository exists.
+40 verbose stack
+40 verbose stack     at ChildProcess.exithandler (child_process.js:751:12)
+40 verbose stack     at ChildProcess.emit (events.js:110:17)
+40 verbose stack     at maybeClose (child_process.js:1015:16)
+40 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
+41 verbose cwd D:\Projects\Trade\trade
+42 error Windows_NT 6.3.9600
+43 error argv "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "--save" "mz/fs"
+44 error node v0.12.2
+45 error npm  v2.7.4
+46 error code 128
+47 error Command failed: git -c core.longpaths=true clone --template=C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:mz/fs.git C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f
+47 error Cloning into bare repository 'C:\Users\givinsot\AppData\Roaming\npm-cache\_git-remotes\git-github-com-mz-fs-git-867ae47f'...
+47 error Host key verification failed.
+47 error fatal: Could not read from remote repository.
+47 error
+47 error Please make sure you have the correct access rights
+47 error and the repository exists.
+48 error If you need help, you may report this error at:
+48 error     <https://github.com/npm/npm/issues>
+49 verbose exit [ 1, true ]

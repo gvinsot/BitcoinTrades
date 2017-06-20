@@ -21,7 +21,7 @@ var currentStat=
 
 var logException = function(ex)
 {
-    Console.log("ERROR:"+ex.message);
+    console.log("ERROR:"+ex.message);
 }
 
 var loadPreviousStat = function()
@@ -34,7 +34,7 @@ var loadPreviousStat = function()
 }
 
 
-var startGetServerTime= new function()
+var startGetServerTime= function()
 {
     var options = {
     'uri': 'https://api.kraken.com/0/public/Time',
@@ -43,16 +43,17 @@ var startGetServerTime= new function()
 
     return rp(options).promise();
 }
-var endGetServerTime =function(serverTimeString) {
-    console.log('Retrieved Server Time');
+var endGetServerTime = function(serverTimeString) {
+    
     dateString= JSON.parse(serverTimeString).result.rfc1123;
+    console.log('Time: '+dateString);
     // var date = moment.utc(); 
     // var month =   (date.month()+1).toString();
     // month = month.length==1 ? "0" + month : month;         
     // dateString=date.year()+ "-"+month+"-"+date.date()+"T"+date.hours()+":"+date.minutes()+":"+date.seconds();
 }
 
-var startGetLastTicker = new function()
+var startGetLastTicker = function()
 {
    var options = {
     'uri': 'https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR',
@@ -62,10 +63,9 @@ var startGetLastTicker = new function()
     return rp(options).promise();
 }
 
-var endGetLastTicker=function(resultString) {
-        console.log('Retrieve ticker');
+var endGetLastTicker = function(resultString) {
         var resultObject = JSON.parse(resultString);
-        var currentRate=resultObject.result.XXBTZEUR.c[0];
+        var currentRate=parseFloat(resultObject.result.XXBTZEUR.c[0]);
 
         var dayTrades=resultObject.result.XXBTZEUR.t[0];
         currentStat.numberOfTrades = dayTrades-stat.numberOfTrades;
@@ -77,7 +77,7 @@ var endGetLastTicker=function(resultString) {
         if(currentStat.volume<0)
             currentStat.volume = dayVolume;
         
-        currentStat.rate = ( parseFloat(currentRate) + parseFloat(stat.lastRate))/2;  
+        currentStat.rate = ( currentRate + stat.lastRate)/2;  
 
         stat.dayVolume=dayVolume;
         stat.numberOfTrades=dayTrades;
