@@ -1,8 +1,10 @@
 
 'use strict';
 
-var rp = require('request-promise-any');
+// @ts-ignore
+var  rp  =  require('request-promise-any');
 var fs = require('mz/fs');
+// @ts-ignore
 var moment = require('moment');
 
 var stat =
@@ -11,7 +13,7 @@ var stat =
         "lastRate":0,
         "numberOfTrades":0
     };
-var dateString ="";
+var currentTime ="";
 var currentStat=
     {
         "volume":0,
@@ -19,13 +21,11 @@ var currentStat=
         "numberOfTrades":0
     };
 
-var logException = function(ex)
-{
+var logException = function(ex) {
     console.log("ERROR:"+ex.message);
 }
 
-var loadPreviousStat = function()
-{
+var loadPreviousStat = function() {
     return fs.readFile('stats.txt', 'utf8')
     .then(function (statString) {
         stat = JSON.parse(statString);
@@ -34,8 +34,7 @@ var loadPreviousStat = function()
 }
 
 
-var startGetServerTime= function()
-{
+var startGetServerTime= function() {
     var options = {
     'uri': 'https://api.kraken.com/0/public/Time',
     'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
@@ -44,17 +43,13 @@ var startGetServerTime= function()
     return rp(options).promise();
 }
 var endGetServerTime = function(serverTimeString) {
-    
-    dateString= JSON.parse(serverTimeString).result.rfc1123;
-    console.log('Time: '+dateString);
-    // var date = moment.utc(); 
-    // var month =   (date.month()+1).toString();
-    // month = month.length==1 ? "0" + month : month;         
-    // dateString=date.year()+ "-"+month+"-"+date.date()+"T"+date.hours()+":"+date.minutes()+":"+date.seconds();
+    currentTime= JSON.parse(serverTimeString).result.rfc1123;
+    console.log('Time: ' + currentTime);
+    // var date = moment.utc(currentTime);       
+    // currentTime=date.year()+ "-"+month+"-"+date.date()+"T"+date.hours()+":"+date.minutes()+":"+date.seconds();
 }
 
-var startGetLastTicker = function()
-{
+var startGetLastTicker = function() {
    var options = {
     'uri': 'https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR',
     'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
@@ -86,10 +81,10 @@ var endGetLastTicker = function(resultString) {
         console.log("Rate: "+currentRate+"€");
     };
 
-var saveTransactionLogs=function()
-{
-    return fs.appendFile('transactionLogs.txt', dateString+";"+currentStat.rate+";"+currentStat.volume+";"+currentStat.numberOfTrades+ "\r\n");                    
+var saveTransactionLogs = function() {
+    return fs.appendFile('transactionLogs.txt', currentTime+";"+currentStat.rate+";"+currentStat.volume+";"+currentStat.numberOfTrades+ "\r\n");                    
 }
+
 var saveStats = function () {
         var toWrite=JSON.stringify(stat);
         fs.writeFileSync('stats.txt',toWrite, 'utf8' );
@@ -97,13 +92,13 @@ var saveStats = function () {
     };
 
 var p1 = Promise.resolve(loadPreviousStat).catch(logException);    
-var p2 = Promise.resolve(startGetServerTime).catch(logException)
+var p2 = Promise.resolve(startGetServerTime)
     .then(endGetServerTime).catch(logException);
-var p3 = Promise.resolve(startGetLastTicker).catch(logException)
+var p3 = Promise.resolve(startGetLastTicker)
     .then(endGetLastTicker).catch(logException);
 
 Promise.all([p1,p2,p3])
     .then(saveTransactionLogs).catch(logException)
     .then(saveStats).catch(logException)
-    .then(function(){console.log("Success");process.exit(0);},
+    .then(function(){console.log("Finished");process.exit(0);},
          function(){console.log("Failed");;process.exit(0);});//
