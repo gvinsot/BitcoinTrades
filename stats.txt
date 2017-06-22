@@ -1,1 +1,1 @@
-{"dayVolume":"3880.19237011","lastRate":2304.944,"numberOfTrades":8589}
+{"dayVolume":"3487.62699350","lastRate":2363,"numberOfTrades":6097}

@@ -47,6 +47,13 @@ var startGetLastTicker = function() {
     return rp(options).promise();
 }
 
+var round = function(val,decimal)
+{
+    var mul=Math.pow(10,decimal);
+    var result = Math.round(val * mul) / mul;
+    return result;
+}
+
 var endGetLastTicker = function(resultString) {
         var resultObject = JSON.parse(resultString);
         var currentRate=parseFloat(resultObject.result.XXBTZEUR.c[0]);
@@ -54,14 +61,15 @@ var endGetLastTicker = function(resultString) {
         var dayTrades=resultObject.result.XXBTZEUR.t[0];
         currentStat.numberOfTrades = dayTrades-stat.numberOfTrades;
         if(currentStat.numberOfTrades<0)
-            currentStat.numberOfTrades = dayTrades;
-        
+            currentStat.numberOfTrades = dayTrades;    
+
         var dayVolume=resultObject.result.XXBTZEUR.v[0];
         currentStat.volume = dayVolume-stat.dayVolume;
         if(currentStat.volume<0)
             currentStat.volume = dayVolume;
+        currentStat.volume = round(currentStat.volume,9);
         
-        currentStat.rate = ( currentRate + stat.lastRate)/2;  
+        currentStat.rate = round( ( currentRate + stat.lastRate)/2,9);  
 
         stat.dayVolume=dayVolume;
         stat.numberOfTrades=dayTrades;
