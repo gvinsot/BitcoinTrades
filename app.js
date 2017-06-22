@@ -80,7 +80,10 @@ var endGetLastTicker = function(resultString) {
     };
 
 var saveTransactionLogs = function() {
-    return fs.appendFile('transactionLogs.txt', currentTime+";"+currentStat.rate+";"+currentStat.volume+";"+currentStat.numberOfTrades+ "\r\n");                    
+    if(currentTime!="")
+    {
+        return fs.appendFile('transactionLogs.txt', currentTime+";"+currentStat.rate+";"+currentStat.volume+";"+currentStat.numberOfTrades+ "\r\n");                    
+    }
 }
 
 var saveStats = function () {
