@@ -25,26 +25,16 @@ var logException = function(ex) {
     console.log("ERROR:"+ex.message);
 }
 
-var loadPreviousStat = function() {
-    return fs.readFile('stats.txt', 'utf8')
-    .then(function (statString) {
+var parsePreviousStat = function(statString) {
         stat = JSON.parse(statString);
         console.log('Stats loaded');
-    });
-}
-
-
-var startGetServerTime= function() {
-    var options = {
-    'uri': 'https://api.kraken.com/0/public/Time',
-    'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
+        return stat;
     };
 
-    return rp(options).promise();
-}
-var endGetServerTime = function(serverTimeString) {
+var parseServerTime = function(serverTimeString) {
     currentTime= JSON.parse(serverTimeString).result.rfc1123;
     console.log('Time: ' + currentTime);
+    return currentTime;
     // var date = moment.utc(currentTime);       
     // currentTime=date.year()+ "-"+month+"-"+date.date()+"T"+date.hours()+":"+date.minutes()+":"+date.seconds();
 }
@@ -52,9 +42,8 @@ var endGetServerTime = function(serverTimeString) {
 var startGetLastTicker = function() {
    var options = {
     'uri': 'https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR',
-    'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
+    //'headers' : { 'API-Key': 'client-api', 'API-Sign':''}
     };
-
     return rp(options).promise();
 }
 
@@ -79,6 +68,7 @@ var endGetLastTicker = function(resultString) {
         stat.lastRate=currentRate;
         
         console.log("Rate: "+currentRate+"€");
+        return currentStat;
     };
 
 var saveTransactionLogs = function() {
@@ -91,13 +81,17 @@ var saveStats = function () {
         console.log('Saved stats');
     };
 
-var p1 = Promise.resolve(loadPreviousStat).catch(logException);    
-var p2 = Promise.resolve(startGetServerTime)
-    .then(endGetServerTime).catch(logException);
-var p3 = Promise.resolve(startGetLastTicker)
-    .then(endGetLastTicker).catch(logException);
+var p1 = Promise.resolve(fs.readFile('stats.txt', 'utf8'))
+                .then(parsePreviousStat)
+                .catch(logException)
+                .then(startGetLastTicker)
+                .then(endGetLastTicker)
+                .catch(logException);
+var p2 = Promise.resolve(rp({'uri': 'https://api.kraken.com/0/public/Time' }))
+                .then(parseServerTime)
+                .catch(logException);
 
-Promise.all([p1,p2,p3])
+Promise.all([p1,p2])
     .then(saveTransactionLogs).catch(logException)
     .then(saveStats).catch(logException)
     .then(function(){console.log("Finished");process.exit(0);},
